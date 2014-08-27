@@ -14,14 +14,14 @@ local UD = cc.UserDefault:getInstance()
 local SA = cc.SimpleAudioEngine:getInstance()
 local FU = cc.FileUtils:getInstance()
 
-cox.d = D
-cox.tc = TC
-cox.fc = FC
-cox.w = SIZE.width
-cox.h = SIZE.height
-cox.ud = UD
-cox.sa = SA
-cox.fu = FU
+cox.director = D
+cox.textures = TC
+cox.frames = FC
+cox.win_w = SIZE.width
+cox.win_h = SIZE.height
+cox.settings = UD
+cox.audio = SA
+cox.files = FU
 
 
 function cox.traceback(msg)
@@ -43,8 +43,8 @@ end
 function cox.setrso(w, h, type)
     D:getOpenGLView():setDesignResolutionSize(w, h, type)
     SIZE = D:getWinSize()
-    cox.w = SIZE.width
-    cox.h = SIZE.height
+    cox.win_w = SIZE.width
+    cox.win_h = SIZE.height
 end
 
 -- run or replace scene
@@ -60,7 +60,7 @@ end
 eg.
 local function onrelease(code, event)
     if code == cc.KeyCode.KEY_BACK then
-        cox.d:endToLua()
+        cox.director:endToLua()
     end
 end
 cox.bindkey(layer, onrelease)
@@ -75,7 +75,7 @@ end
 
 --[[ bind KEY_BACK event
 eg.
-cox.bindkb(layer, function() cox.d:endToLua() end)
+cox.bindkb(layer, function() cox.director:endToLua() end)
 ]]
 function cox.bindkb(node, cb, ...)
     local arg = ...
@@ -108,7 +108,7 @@ end
 @tex  load texture from file
 @animf load texture with animation
 eg.
-local spr = cox.newspr{parent=layer, texf="carrot.png", x=cox.w/2, y=276}
+local spr = cox.newspr{parent=layer, texf="carrot.png", x=cox.win_w/2, y=276}
 spr:set{scale=2, rot=90, name="carrot"}
 spr:runact{"move", 1, 100, 100}
 ]]
